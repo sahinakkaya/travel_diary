@@ -6,6 +6,7 @@ from .serializers import TravelSerializer, UserSerializer
 from .models import Travel
 from .permissions import IsOwnerOrReadOnly
 
+
 # Create your views here.
 
 # User.objects.create_superuser(username="sahin", password="asdf1234")
@@ -31,6 +32,23 @@ class TravelViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    def retrieve(self, request, *args, **kwargs):
+        viewer = request.user.username
+        pk = kwargs["pk"]
+        try:
+            travel = Travel.objects.get(pk=pk)
+        except Travel.DoesNotExist:
+            # If travel does not exist there is nothing to log about.
+            # We can just call the super() function
+            pass
+        else:
+            owner = travel.owner.username
+            if viewer != owner:
+                print(f"{viewer} viewed {owner}'s travel about {travel.place} "
+                      f"(travel id: {travel.id})")
+
+        return super().retrieve(self, request, *args, **kwargs)
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -38,3 +56,4 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]

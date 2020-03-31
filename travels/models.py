@@ -5,7 +5,7 @@ from django.db import models
 
 class Travel(models.Model):
     date = models.DateField()
-    title = models.CharField(max_length=50, blank=True, default="")
+    title = models.CharField(max_length=50, blank=True)
     place = models.CharField(max_length=50)
     notes = models.CharField(max_length=100)
     owner = models.ForeignKey("auth.User", related_name="travels",
@@ -13,3 +13,6 @@ class Travel(models.Model):
 
     class Meta:
         ordering = ['date']
+
+    def __str__(self):
+        return f"{self.title}, {self.place}, by {self.owner}"
