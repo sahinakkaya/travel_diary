@@ -1,27 +1,16 @@
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions
-from django.contrib.auth.models import User
-from .serializers import TravelSerializer, UserSerializer
+from .serializers import TravelSerializer
 from .models import Travel
 from .permissions import IsOwnerOrReadOnly
 
 
 # Create your views here.
 
-# User.objects.create_superuser(username="sahin", password="asdf1234")
-# sample_users = [{"username": "kartaca", "password": "krtc4321"},
-#                 {"username": "new_user", "password": "fdsa4321"},
-#                 {"username": "something", "password": "fdsa4321"}]
-#
-# for user in sample_users:
-#     u = User.objects.create_user(**user)
-#     u.save()
-
 
 class TravelViewSet(viewsets.ModelViewSet):
     """
-    This viewset automatically provides `list`, `create`, `retrieve`,
+    This viewset provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
     queryset = Travel.objects.all()
@@ -48,12 +37,3 @@ class TravelViewSet(viewsets.ModelViewSet):
                       f"(travel id: {travel.id})")
 
         return super().retrieve(self, request, *args, **kwargs)
-
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This viewset automatically provides `list` and `detail` actions.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
