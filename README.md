@@ -1,7 +1,7 @@
 ### Build instructions
-In order to build
+In order to build and run
 
-`docker-compose up`
+`docker-compose up -d --build`
 
 Since it creates a fresh database, you need to apply migrations and create a superuser to use the API properly:
 
@@ -15,7 +15,7 @@ Then you can visit [your localhost](http://localhost:8000/) to browse the API.
 
 ### Notes
 I have only completed the backend part of the project despite all my efforts. I had never used any of the 
-technologies I was asked to use. (django, django rest, kafka, angular, spring and docker to be explicit) 
+technologies I was asked to use before (django, django rest, kafka, angular, spring and docker to be explicit).
 So I decided to start learning from django since it is at least python related. It went well for me and
 made me think that I should use Django more after this project. I have also implemented jwt for authentication
 using djangorestframework-simplejwt but didn't include it here since it's hard to test my API with it without
